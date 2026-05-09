@@ -73,143 +73,141 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
-            <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100 relative">
-                {/* Back Button */}
-                <Link href="/" className="absolute top-4 left-4 text-gray-400 hover:text-gray-600 transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                    </svg>
-                    Back
-                </Link>
-
-                <div>
-                    <div className="flex justify-center mt-6">
-                        <img src={logoImg} alt="Eloquente Catering" className="h-16 w-auto object-contain" />
-                    </div>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        Create your account
+        <div className="min-h-screen flex font-sans" style={{animation:'fadeIn .4s ease both'}}>
+            {/* Left: Brand Panel */}
+            <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center" style={{background:'linear-gradient(135deg, #450a0a, #7f1d1d, #991b1b)'}}>
+                <div className="absolute inset-0 opacity-[.06]" style={{backgroundImage:'radial-gradient(circle at 30% 40%,#f0aa0b,transparent 60%)'}} />
+                <div className="absolute inset-0 opacity-[.03]" style={{backgroundImage:'radial-gradient(circle at 70% 80%,#f0aa0b,transparent 40%)'}} />
+                <div className="relative z-10 text-center px-12 max-w-lg">
+                    <img src={logoImg} alt="Eloquente Catering" className="h-20 w-auto mx-auto mb-8 drop-shadow-lg" />
+                    <h1 className="font-bold text-3xl mb-4 leading-tight" style={{color:'#ffffff'}}>Join<br />Eloquente Catering</h1>
+                    <p className="text-sm leading-relaxed" style={{color:'rgba(255,255,255,0.65)'}}>
+                        Create your account to start booking premium catering services for your special events.
                     </p>
+                    <div className="mt-12 flex justify-center gap-6 text-xs" style={{color:'rgba(255,255,255,0.35)'}}>
+                        <div className="flex items-center gap-2">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                            Browse Menu
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            Book Events
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                            Track Payments
+                        </div>
+                    </div>
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm space-y-4">
+            </div>
+
+            {/* Right: Form Panel */}
+            <div className="flex-1 flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8 py-12">
+                <div className="max-w-md w-full">
+                    <Link href="/" className="inline-flex items-center text-sm text-gray-400 hover:text-red-900 transition-colors mb-8">
+                        <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                        Back to Home
+                    </Link>
+
+                    <div className="lg:hidden flex justify-center mb-6">
+                        <img src={logoImg} alt="Eloquente Catering" className="h-14 w-auto" />
+                    </div>
+
+                    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                        <div className="px-8 py-6 lg:hidden" style={{background:'linear-gradient(90deg, #7f1d1d, #991b1b)'}}>
+                            <h2 className="font-bold text-xl" style={{color:'#ffffff'}}>Create Account</h2>
+                            <p className="text-sm mt-1" style={{color:'rgba(255,255,255,0.65)'}}>Fill in your details to get started</p>
+                        </div>
+                        <div className="hidden lg:block px-8 pt-8 pb-2">
+                            <h2 className="text-gray-900 font-bold text-2xl">Create Account</h2>
+                            <p className="text-gray-500 text-sm mt-1">Fill in your details to get started</p>
+                        </div>
+
+                <form className="px-8 py-6 space-y-4" onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="username" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Username</label>
+                        <input
+                            id="username" name="username" type="text" required
+                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-900 focus:border-transparent outline-none text-gray-900 font-medium placeholder:text-gray-300 transition-all"
+                            placeholder="Choose a username" value={formData.username} onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
+                        <input
+                            id="email" name="email" type="email" required
+                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-900 focus:border-transparent outline-none text-gray-900 font-medium placeholder:text-gray-300 transition-all"
+                            placeholder="your@email.com" value={formData.email} onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Mobile Number</label>
+                        <input
+                            id="phone" name="phone" type="tel" required
+                            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-900 focus:border-transparent outline-none text-gray-900 font-medium placeholder:text-gray-300 transition-all"
+                            placeholder="09XX XXX XXXX" value={formData.phone} onChange={handleChange}
+                        />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
                         <div>
-                            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                            <label htmlFor="password" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Password</label>
                             <input
-                                id="username"
-                                name="username"
-                                type="text"
-                                required
-                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm mt-1"
-                                placeholder="Username"
-                                value={formData.username}
-                                onChange={handleChange}
+                                id="password" name="password" type="password" required
+                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-900 focus:border-transparent outline-none text-gray-900 font-medium placeholder:text-gray-300 transition-all"
+                                placeholder="••••••••" value={formData.password} onChange={handleChange}
                             />
                         </div>
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
+                            <label htmlFor="confirmPassword" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Confirm</label>
                             <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                required
-                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm mt-1"
-                                placeholder="Email address"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Mobile Number</label>
-                            <input
-                                id="phone"
-                                name="phone"
-                                type="tel"
-                                required
-                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm mt-1"
-                                placeholder="Mobile number"
-                                value={formData.phone}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm mt-1"
-                                placeholder="Password"
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                            <input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                required
-                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm mt-1"
-                                placeholder="Confirm Password"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
+                                id="confirmPassword" name="confirmPassword" type="password" required
+                                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-900 focus:border-transparent outline-none text-gray-900 font-medium placeholder:text-gray-300 transition-all"
+                                placeholder="••••••••" value={formData.confirmPassword} onChange={handleChange}
                             />
                         </div>
                     </div>
 
-                    <div className="flex items-start">
+                    <div className="flex items-start pt-2">
                         <div className="flex items-center h-5">
                             <input
-                                id="terms"
-                                name="terms"
-                                type="checkbox"
+                                id="terms" name="terms" type="checkbox"
                                 checked={agreedToTerms}
                                 onChange={(e) => {
-                                    if (e.target.checked && !canAgree) {
-                                        setShowTerms(true);
-                                    } else {
-                                        setAgreedToTerms(e.target.checked);
-                                    }
+                                    if (e.target.checked && !canAgree) { setShowTerms(true); }
+                                    else { setAgreedToTerms(e.target.checked); }
                                 }}
-                                className="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded cursor-pointer"
+                                className="focus:ring-red-900 h-4 w-4 text-red-900 border-gray-300 rounded cursor-pointer"
                             />
                         </div>
                         <div className="ml-3 text-sm">
-                            <label htmlFor="terms" className="font-medium text-gray-700">
+                            <label htmlFor="terms" className="text-gray-600">
                                 I agree to the{' '}
-                                <button type="button" onClick={() => setShowTerms(true)} className="text-primary-600 hover:text-primary-500 underline">
-                                    Terms and Conditions
-                                </button>
+                                <button type="button" onClick={() => setShowTerms(true)} className="font-bold text-red-900 hover:text-red-700 underline">Terms and Conditions</button>
                             </label>
                         </div>
                     </div>
 
                     {error && (
-                        <div className="text-red-500 text-sm text-center">
+                        <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                            <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.27 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
                             {error}
                         </div>
                     )}
 
-                    <div>
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${loading ? 'bg-primary-400 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200`}
-                        >
-                            {loading ? 'Creating account...' : 'Register'}
-                        </button>
-                    </div>
+                    <button
+                        type="submit" disabled={loading}
+                        className={`w-full py-3.5 rounded-xl font-bold text-sm uppercase tracking-wider transition-all transform active:scale-[.98] shadow-lg ${loading ? 'bg-red-400 cursor-not-allowed text-white/70' : 'bg-red-900 text-white hover:bg-red-800 hover:shadow-xl'}`}
+                    >
+                        {loading ? 'Creating account...' : 'Create Account'}
+                    </button>
                 </form>
-                <div className="text-center text-sm text-gray-600">
-                    <p>
-                        Already have an account?{' '}
-                        <Link href="/login" className="font-medium text-primary-600 hover:text-primary-500">
-                            Sign in
-                        </Link>
-                    </p>
+                        <div className="px-8 pb-6 text-center">
+                            <p className="text-sm text-gray-500">
+                                Already have an account?{' '}
+                                <Link href="/login" className="font-bold text-red-900 hover:text-red-700 transition-colors">Sign in</Link>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

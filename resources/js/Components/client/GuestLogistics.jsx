@@ -39,7 +39,7 @@ const GuestLogistics = ({ bookingData, updateBooking, onNext, onBack }) => {
         }
 
         updateBooking({ pax: parseInt(pax), dietaryNotes });
-        onNext();
+        onNext(true);
     };
 
     return (

@@ -28,15 +28,15 @@ const ACTIVE_KEY = 'ecs_booking_active';
 
 const BookingWizard = () => {
     const { user } = useAuth();
-    const { addToast } = useToast();
+    const toast = useToast();
     const [showResumeModal, setShowResumeModal] = useState(false);
     const [resumeStep, setResumeStep] = useState(1);
     const initDone = useRef(false);
 
-    // Restore from sessionStorage on mount
+    // Restore from localStorage on mount (persists across logout/login)
     const [currentStep, setCurrentStep] = useState(() => {
         try {
-            const saved = sessionStorage.getItem(STORAGE_KEY);
+            const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) { const d = JSON.parse(saved); return d._step || 1; }
         } catch(e) {}
         return 1;
@@ -44,7 +44,7 @@ const BookingWizard = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [bookingData, setBookingData] = useState(() => {
         try {
-            const saved = sessionStorage.getItem(STORAGE_KEY);
+            const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) { const d = JSON.parse(saved); const { _step, ...rest } = d; return { ...defaultBookingData, ...rest }; }
         } catch(e) {}
         return { ...defaultBookingData };
@@ -56,10 +56,13 @@ const BookingWizard = () => {
         initDone.current = true;
         const wasActive = sessionStorage.getItem(ACTIVE_KEY);
         try {
-            const saved = sessionStorage.getItem(STORAGE_KEY);
+            const saved = localStorage.getItem(STORAGE_KEY);
             if (saved && !wasActive) {
                 const d = JSON.parse(saved);
-                if (d._step && d._step > 1) {
+                if (d._customPackageFromMenu) {
+                    // Custom package from Menu page - show message instead of resume modal
+                    toast.success('Your custom package is ready! Fill in the event details to complete your booking.');
+                } else if (d._step && d._step > 1) {
                     setResumeStep(d._step);
                     setShowResumeModal(true);
                 }
@@ -69,27 +72,32 @@ const BookingWizard = () => {
         sessionStorage.setItem(ACTIVE_KEY, '1');
     }, []);
 
-    // Persist to sessionStorage on every change
+    // Persist to localStorage on every change (survives logout/login)
     useEffect(() => {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ ...bookingData, _step: currentStep }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...bookingData, _step: currentStep }));
     }, [bookingData, currentStep]);
 
     // Show toast when navigating away
     useEffect(() => {
         const removeStartListener = router.on('start', (event) => {
             // Only show toast if navigating away from the booking process
-            if (!event.detail.visit.url.pathname.includes('/book')) {
-                const saved = sessionStorage.getItem(STORAGE_KEY);
+            const url = event.detail.visit.url;
+            const path = typeof url === 'string' ? url : url?.pathname || '';
+            if (!path.includes('/book')) {
+                const saved = localStorage.getItem(STORAGE_KEY);
                 if (saved) {
-                    addToast('Progress automatically saved. You can resume later.', 'success');
+                    const d = JSON.parse(saved);
+                        if (d._step && d._step > 1) {
+                        toast.success('Your booking progress has been saved. You can resume anytime.');
+                    }
                 }
             }
         });
         return () => removeStartListener();
-    }, [addToast]);
+    }, [toast]);
 
     const clearDraft = () => {
-        sessionStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(STORAGE_KEY);
         sessionStorage.removeItem(ACTIVE_KEY);
     };
 
@@ -141,8 +149,8 @@ const BookingWizard = () => {
         return true;
     };
 
-    const nextStep = () => {
-        if (validateStep(currentStep)) {
+    const nextStep = (skipValidation = false) => {
+        if (skipValidation || validateStep(currentStep)) {
             setCurrentStep(prev => prev + 1);
         }
     };
@@ -475,8 +483,8 @@ const BookingWizard = () => {
                     {/* Left: Main Card */}
                     <div className="flex-1 bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col min-h-[650px] transition-all duration-300">
                         {/* Top Header inside the card */}
-                        <div className="bg-gradient-to-r from-red-900 via-red-800 to-red-900 px-8 py-6 text-white relative overflow-hidden">
-                            <div className="absolute inset-0 opacity-[.04]" style={{backgroundImage:'radial-gradient(circle at 20% 50%,#f0aa0b,transparent 60%)'}} />
+                        <div className="bg-red-950 px-8 py-6 text-white relative overflow-hidden">
+                            <div className="absolute inset-0 opacity-[.06]" style={{backgroundImage:'radial-gradient(circle at 20% 50%,#f0aa0b,transparent 60%)'}} />
                             
                             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <div className="flex items-center gap-5">
@@ -484,9 +492,9 @@ const BookingWizard = () => {
                                         {stepMessages[currentStep]?.icon}
                                     </div>
                                     <div>
-                                        <div className="text-yellow-400/90 text-[10px] font-bold uppercase tracking-widest mb-1">Step {currentStep} of {totalSteps}</div>
-                                        <h2 className="text-white font-display font-bold text-2xl md:text-3xl leading-tight">{stepMessages[currentStep]?.greeting}</h2>
-                                        <p className="text-red-100/80 text-sm mt-0.5">{stepMessages[currentStep]?.sub}</p>
+                                        <div className="text-yellow-400 text-[10px] font-bold uppercase tracking-widest mb-1">Step {currentStep} of {totalSteps}</div>
+                                        <h2 className="text-white font-bold text-2xl md:text-3xl leading-tight">{stepMessages[currentStep]?.greeting}</h2>
+                                        <p className="text-gray-300 text-sm mt-0.5">{stepMessages[currentStep]?.sub}</p>
                                     </div>
                                 </div>
                             </div>

@@ -100,7 +100,7 @@ const EventSurcharges = ({ bookingData, updateBooking, onNext, onBack, user }) =
             venueDistance,
             isHighRise
         });
-        onNext();
+        onNext(true);
     };
 
     // Group cities for the dropdown (filtered by search)

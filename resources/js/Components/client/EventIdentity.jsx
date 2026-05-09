@@ -55,28 +55,29 @@ const EventIdentity = ({ bookingData, updateBooking, onNext, onBack }) => {
     const handleSelect = (eventType) => {
         setSelected(eventType.label);
         updateBooking({ eventType: eventType.label });
-        // Auto-advance after brief delay
-        setTimeout(() => onNext(), 300);
+        // Auto-advance after brief delay - skip validation since we just set it
+        setTimeout(() => onNext(true), 300);
     };
 
     const handleNext = () => {
         if (!selected) return;
-        onNext();
+        onNext(true);
     };
 
     return (
         <div className="flex flex-col h-full justify-between animate-fadeIn">
-            <div className="space-y-8">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4 max-w-4xl mx-auto">
+            <div className="space-y-6">
+                <p className="text-center text-sm text-gray-500">Select the type of event you're planning</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                     {EVENT_TYPES.map((eventType) => {
                         const isSelected = selected === eventType.label;
                         return (
                             <button
                                 key={eventType.id}
                                 onClick={() => handleSelect(eventType)}
-                                className={`group relative h-40 rounded-2xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 ${isSelected
-                                    ? 'ring-4 ring-primary-500 shadow-lg'
-                                    : 'hover:ring-2 hover:ring-primary-300'
+                                className={`group relative h-44 rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 ${isSelected
+                                    ? 'ring-[3px] ring-yellow-400 shadow-xl scale-[1.02]'
+                                    : 'shadow-sm hover:shadow-xl hover:ring-2 hover:ring-red-300'
                                     }`}
                             >
                                 {/* Background Image */}
@@ -86,11 +87,11 @@ const EventIdentity = ({ bookingData, updateBooking, onNext, onBack }) => {
                                 ></div>
 
                                 {/* Overlay gradient */}
-                                <div className={`absolute inset-0 transition-opacity duration-300 ${isSelected ? 'bg-primary-900/60' : 'bg-black/50 group-hover:bg-black/40'}`}></div>
+                                <div className={`absolute inset-0 transition-all duration-300 ${isSelected ? 'bg-gradient-to-t from-red-900/80 via-red-900/40 to-red-900/20' : 'bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/60'}`}></div>
 
                                 {/* Checkmark for selected state */}
                                 {isSelected && (
-                                    <div className="absolute top-3 right-3 bg-primary-500 text-white p-1 rounded-full z-10 shadow-md">
+                                    <div className="absolute top-3 right-3 bg-yellow-400 text-red-900 p-1.5 rounded-full z-10 shadow-lg" style={{animation:'imgZoomIn .3s ease'}}>
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                         </svg>
@@ -98,14 +99,14 @@ const EventIdentity = ({ bookingData, updateBooking, onNext, onBack }) => {
                                 )}
 
                                 {/* Content */}
-                                <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 p-4">
-                                    <div className={`mb-2 transform transition-all duration-300 ${isSelected ? 'scale-110 text-white' : 'text-gray-200 group-hover:text-white group-hover:scale-110'}`}>
-                                        <EventIcon type={eventType.icon} className="w-12 h-12 drop-shadow-md" />
+                                <div className="absolute inset-0 flex flex-col items-center justify-end text-white z-10 p-4 pb-5">
+                                    <div className={`mb-2 transform transition-all duration-300 ${isSelected ? 'scale-110 text-yellow-300' : 'text-gray-200 group-hover:text-white group-hover:scale-110'}`}>
+                                        <EventIcon type={eventType.icon} className="w-10 h-10 drop-shadow-lg" />
                                     </div>
-                                    <h3 className="font-bold text-lg mb-1 drop-shadow-md text-center">
+                                    <h3 className={`font-bold text-base mb-1 drop-shadow-lg text-center leading-tight ${isSelected ? 'text-yellow-100' : ''}`}>
                                         {eventType.label}
                                     </h3>
-                                    <p className="text-xs text-center text-gray-200 drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 max-h-0 group-hover:max-h-10 overflow-hidden line-clamp-2">
+                                    <p className="text-[11px] text-center text-gray-200/80 drop-shadow-md leading-snug">
                                         {eventType.description}
                                     </p>
                                 </div>

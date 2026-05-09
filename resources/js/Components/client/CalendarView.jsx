@@ -16,6 +16,11 @@ const CalendarView = ({ bookingData, updateBooking, onNext }) => {
     const [timeAmPm, setTimeAmPm] = useState('PM');
     const [duration, setDuration] = useState(bookingData.duration || 4);
 
+    // Update parent immediately when duration changes for live summary
+    useEffect(() => {
+        updateBooking({ duration });
+    }, [duration]);
+
     // Initialize custom time picker from bookingData
     useEffect(() => {
         if (bookingData.time) {
@@ -182,7 +187,7 @@ const CalendarView = ({ bookingData, updateBooking, onNext }) => {
                 duration: duration
             });
         }
-        onNext();
+        onNext(true);
     };
 
     return (

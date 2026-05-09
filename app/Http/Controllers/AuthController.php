@@ -41,6 +41,7 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
+            'remember' => 'nullable|boolean',
         ]);
 
         $user = User::where('username', $request->username)->first();
@@ -51,7 +52,8 @@ class AuthController extends Controller
             ]);
         }
 
-        Auth::login($user);
+        $remember = $request->boolean('remember', false);
+        Auth::login($user, $remember);
         $request->session()->regenerate();
 
         // Redirect based on role

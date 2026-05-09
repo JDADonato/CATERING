@@ -10,9 +10,9 @@ export const useAuth = () => {
     const { auth } = usePage().props;
     const user = auth?.user || null;
 
-    const login = async (username, password) => {
+    const login = async (username, password, remember = false) => {
         return new Promise((resolve, reject) => {
-            router.post('/login', { username, password }, {
+            router.post('/login', { username, password, remember }, {
                 onSuccess: () => {
                     // Server redirects on success, so this resolves after redirect
                     // The page will have the user's role from the new page's props
